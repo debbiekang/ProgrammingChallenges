@@ -1,0 +1,27 @@
+#Question 1 Generate a query to get the sum of the clicks of the marketing data
+SELECT SUM(clicks) 
+FROM marketing_data;
+
+#Question 2 Generate a query to gather the sum of revenue by store_location from the store_revenue table
+SELECT SUM(revenue)
+FROM store_revenue
+GROUP BY store_location;
+
+#Question 3 Merge these two datasets so we can see impressions, clicks, and revenue together by date and geo. Please ensure all records from each table are accounted for.
+SELECT impressions, clicks, revenue
+FROM store_revenue AS SR
+FULL OUTER JOIN marketing_data AS MD ON MD.geo = SR.store_location
+GROUP BY date, geo
+
+#Question 4 In your opinion, what is the most efficient store and why?
+SELECT (SUM(clicks)/SUM(impressions))*100 as CTR
+FROM marketing_data;
+GROUP BY geo
+ORDER BY CTR DESC
+
+#The store with a higher CTR is better because it means the store has a high rank with low costs. 
+
+#Question 5 (Challenge) Generate a query to rank in order the top 10 revenue producing states
+SELECT TOP 10 store_location
+FROM store_revenue
+ORDER BY store_revenue DESC
